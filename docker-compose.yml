@@ -1,12 +1,13 @@
 version: '3'
 services:
   db:
-    image: mysql
+    image: mysql:8.0.11
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     ports:
       - '3306:3306'
     volumes:
+      - ./mysql-confd:/etc/mysql/conf.d
       - ./db/mysql/volumes:/var/lib/mysql
   web:
     build: .
