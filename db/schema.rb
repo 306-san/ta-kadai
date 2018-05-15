@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_11_085711) do
+ActiveRecord::Schema.define(version: 2018_05_15_023221) do
 
   create_table "line_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "station_id"
@@ -24,6 +24,30 @@ ActiveRecord::Schema.define(version: 2018_05_11_085711) do
   create_table "lines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "previous"
     t.integer "next"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "route_id"
+  end
+
+  create_table "onestroke_lines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "onestroke_id"
+    t.bigint "line_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["line_id"], name: "index_onestroke_lines_on_line_id"
+    t.index ["onestroke_id"], name: "index_onestroke_lines_on_onestroke_id"
+  end
+
+  create_table "onestroke_stations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "onestroke_id"
+    t.bigint "station_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["onestroke_id"], name: "index_onestroke_stations_on_onestroke_id"
+    t.index ["station_id"], name: "index_onestroke_stations_on_station_id"
+  end
+
+  create_table "onestrokes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -53,6 +77,10 @@ ActiveRecord::Schema.define(version: 2018_05_11_085711) do
 
   add_foreign_key "line_stations", "lines"
   add_foreign_key "line_stations", "stations"
+  add_foreign_key "onestroke_lines", "lines"
+  add_foreign_key "onestroke_lines", "onestrokes"
+  add_foreign_key "onestroke_stations", "onestrokes"
+  add_foreign_key "onestroke_stations", "stations"
   add_foreign_key "route_stations", "routes"
   add_foreign_key "route_stations", "stations"
 end
