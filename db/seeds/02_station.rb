@@ -12,8 +12,12 @@ if Route.exists? #Routeにデータをぶち込まれてるか確認
       p "怒ってないよ"
       result['response']['station'].each_cons(2) do |now_station, next_station|
         p now_station['name'] + " - " + next_station['name']
-        route.route_stations.find_or_create_by(station_id: Station.find_by(name: now_station['name']).id) unless route.stations.create(name: now_station['name'],longitude: now_station['x'],latitude: now_station['y']).valid?
-        route.route_stations.find_or_create_by(station_id: Station.find_by(name: next_station['name']).id) unless route.stations.create(name: next_station['name'],longitude: next_station['x'],latitude: next_station['y']).valid?
+        unless route.stations.create(name: now_station['name'],longitude: now_station['x'],latitude: now_station['y']).valid?
+          route.route_stations.find_or_create_by(station: Station.find_by(name: now_station['name']))
+        end
+        unless route.stations.create(name: next_station['name'],longitude: next_station['x'],latitude: next_station['y']).valid?
+          route.route_stations.find_or_create_by(station: Station.find_by(name: next_station['name']))
+        end
         station=Station.find_by(name: now_station['name'])
         p station
         if now_station['prev'].nil?
