@@ -179,3 +179,8 @@ $RECYCLE.BIN/
 
 
 # End of https://www.gitignore.io/api/vim,linux,emacs,macos,windows,visualstudiocode
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity

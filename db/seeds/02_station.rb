@@ -2,7 +2,7 @@ require_relative '00_init'
 
 if Route.exists? #Routeにデータをぶち込まれてるか確認
   routes = Route.all
-  #routes = Route.where(name: %w(JR中央線 JR京浜東北線))
+  # routes = Route.where(name: %w(JR中央線 JR京浜東北線))
   routes.each do |route|
     p route
     sleep(rand(10.0..30.0))
