@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title
+      | Share
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'hello_react', 'data-turbolinks-track': 'reload'
+    div.ui.stackable.container.menu
+      div.item
+        img src="http://lovelive-sunshine.info/wp-content/uploads/2017/01/1485556363-11ad2ae0ace48bbc232ae15705a2808b.jpg" alt="happy party train logo" width="60" 
+      a.item
+        | Happy Party Train 
+  body
+    div.ui.stackable.center
+      = yield
