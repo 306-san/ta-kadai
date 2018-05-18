@@ -1,0 +1,2 @@
+module OnestrokesHelper
+end
