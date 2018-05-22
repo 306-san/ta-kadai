@@ -3,5 +3,7 @@ class OnestrokesController < ApplicationController
   end
 
   def show
+    p params[:first_end_station]
+    p params
   end
 end

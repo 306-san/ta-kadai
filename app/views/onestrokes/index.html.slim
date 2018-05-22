@@ -2,20 +2,16 @@
 / javascript_pack_tag 'test_react', 'data-turbolinks-track': 'reload'
 
 h1.ui.center.aligned.header
-  | たびに出よう・・・！
+  | ちょっと遠回りしてのんびり旅をしませんか？
 
 .ui.container
-    form.ui.form
-      .field
-        .ui.segment
-          label
-            | 発着駅
-          input type="text" name="first-end-station" placeholder="東京駅"
-        i.massive.arrow.down.icon
-        .ui.segment
-          label
-            | 行きたいところ
-          input type="text" name="via-station" placeholder="秋田駅"
-        a href='/onestrokes/show'
-          button.ui.button type="submit"
-            | 探索！
+  = form_with url: onestrokes_show_path, method: :get, local: true, class: 'ui form' do |f|
+    .field
+      .ui.segment
+        = f.label('発着駅')
+        = f.text_field :first_end_station,  placeholder: '東京'
+      i.massive.arrow.down.icon
+      .ui.segment
+        = f.label('行きたいところ')
+        = f.text_field :via_station,  placeholder: '秋田'
+      = f.submit '探索！', class: 'ui button', name: nil
