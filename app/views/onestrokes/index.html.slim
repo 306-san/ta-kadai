@@ -9,9 +9,9 @@ h1.ui.center.aligned.header
     .field
       .ui.segment
         = f.label('発着駅')
-        = f.text_field :first_end_station,  placeholder: '東京'
+        = f.text_field :first_end_station,  placeholder: '東京', required: true
       i.massive.arrow.down.icon
       .ui.segment
         = f.label('行きたいところ')
-        = f.text_field :via_station,  placeholder: '秋田'
+        = f.text_field :via_station,  placeholder: '秋田', required: true
       = f.submit '探索！', class: 'ui button', name: nil
