@@ -1,4 +1,5 @@
 def decide_route(one_stroke_id,route_name, departure_station_name, destination_station)
+  p "decide_route... routen_name: " + route_name + "  " + departure_station_name + " - " + destination_station
   next_station_exists_is = true
   is_array_deleted = false
   onestroke_lines = Array.new # 一筆書きと路線情報を配列に入れてまとめてsaveする
@@ -36,7 +37,8 @@ def decide_route(one_stroke_id,route_name, departure_station_name, destination_s
       end
     end 
   end
-    if next_station_exists_is == false
+    skip_routes = %w(上越新幹線 JR羽越本線)
+    if next_station_exists_is == false && skip_routes.exclude?(route_name)
       onestroke_lines.reverse!
       onestroke_stations.reverse!
     end
