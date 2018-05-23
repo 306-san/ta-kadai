@@ -59,4 +59,10 @@ if Route.exists? #Stationにデータをぶち込まれてるか確認
   decide_route(onestroke_id,"JR常磐線","岩沼","取手")
   decide_route(onestroke_id,"JR常磐線快速","取手","上野")
   decide_route(onestroke_id,"JR上野東京ライン","上野","東京")
+  onestroke_id = Onestroke.create.id
+  decide_route(onestroke_id,"東北新幹線","東京","盛岡")
+  decide_route(onestroke_id,"秋田新幹線","盛岡","秋田")
+  decide_route(onestroke_id,"JR羽越本線","秋田","新津")
+  decide_route(onestroke_id,"JR信越本線","新津","新潟")
+  decide_route(onestroke_id,"上越新幹線","新潟","東京")
 end
