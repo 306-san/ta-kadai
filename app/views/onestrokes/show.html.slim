@@ -4,6 +4,16 @@ h1.ui.center.aligned.header
   | 検索結果が出る予定！
   =  @storoke_ids
 
+- @onestrokes.zip(@transfer_stations_array).each_with_index do |onestroke,i|
+  / = i
+  = onestroke[1]
+  | each
+  - onestroke[0].zip(onestroke[1]).each do |station, route|
+    = station.name
+    =  route
+  = i
+
+p
 .ui.container
   .ui.raised.segment
     .ui.segmnet
