@@ -1,108 +1,34 @@
 = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
 
-h1.ui.center.aligned.header
-  | 検索結果が出る予定！
-  =  @storoke_ids
+- unless @onestrokes.blank?
+  h1.ui.center.aligned.header
+    | 一筆書きでの旅が可能です!
+- else
+  h1.ui.center.aligned.header
+    | 一筆書きの経路が見つかりませんでした・・・
 
-- @onestrokes.zip(@transfer_stations_array).each_with_index do |onestroke,i|
-  / = i
-  = onestroke[0]
-  = onestroke[1]
-  | each
-  - onestroke[0].zip(onestroke[1]).each do |station, route|
-    = station.name
-    = route
-  = i
 
-p
-.ui.container
-  .ui.raised.segment
-    .ui.segmnet
-      .ui.blue.ribbon.label
-        | ルート１
-      p
-      .ui.center.aligned.container
-        .ui.fluid.vertical.steps
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-p 
-.ui.container
-  .ui.raised.segment
-    .ui.segmnet
-      .ui.blue.ribbon.label
-        | ルート2
-      p
-      .ui.center.aligned.container
-        .ui.fluid.vertical.steps
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
-          .step
-            .description
-              i.middle.arrow.down.icon
-          .step
-            .title
-              |ほげほげ駅
-            .description
-              | 東北新幹線
+- @onestrokes.zip(@transfer_stations_array).each.with_index(1) do |onestroke,i|
+  p
+  .ui.container
+    .ui.raised.segment
+      .ui.segmnet
+        .ui.blue.ribbon.label
+          | ルート#{i}
+        p
+        .ui.center.aligned.container
+          .ui.fluid.vertical.steps
+            - onestroke[0].zip(onestroke[1]).each do |station, route|
+              - if route.nil?
+                .step
+                  .title
+                    | #{station.name}
+              - else
+                .step
+                  .title
+                    | #{station.name}
+                  .description
+                    | #{route.name}
+                .step
+                  .description
+                    i.middle.arrow.down.icon
