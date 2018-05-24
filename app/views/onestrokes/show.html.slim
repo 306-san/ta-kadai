@@ -1,5 +1,5 @@
 = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
-
+=
 - unless @onestrokes.blank?
   h1.ui.center.aligned.header
     | 一筆書きでの旅が可能です!
@@ -24,11 +24,18 @@
                   .title
                     | #{station.name}
               - else
-                .step
-                  .title
-                    | #{station.name}
-                  .description
-                    | #{route.name}
+                - if params[:via_station] == station.name
+                  .step style="background-color: #009c95;"
+                    .title
+                      | #{station.name}
+                    .description
+                      | #{route.name}
+                - else
+                  .step
+                    .title
+                      | #{station.name}
+                    .description
+                      | #{route.name}
                 .step
                   .description
                     i.middle.arrow.down.icon
