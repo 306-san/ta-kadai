@@ -37,7 +37,7 @@ def decide_route(one_stroke_id,route_name, departure_station_name, destination_s
       end
     end 
   end
-    skip_routes = %w(上越新幹線 JR羽越本線)
+    skip_routes = %w(上越新幹線 JR羽越本線 JR東北本線 JR常磐線 JR常磐線快速 )
     if next_station_exists_is == false && skip_routes.exclude?(route_name)
       onestroke_lines.reverse!
       onestroke_stations.reverse!
