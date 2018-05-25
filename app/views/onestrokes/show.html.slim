@@ -1,5 +1,6 @@
 = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
-=
+= javascript_pack_tag 'map_react' , 'data-turbolinks-track': 'reload'
+
 - unless @onestrokes.blank?
   h1.ui.center.aligned.header
     | 一筆書きでの旅が可能です!
@@ -16,26 +17,31 @@
         .ui.blue.ribbon.label
           | ルート#{i}
         p
-        .ui.center.aligned.container
-          .ui.fluid.vertical.steps
-            - onestroke[0].zip(onestroke[1]).each do |station, route|
-              - if route.nil?
-                .step
-                  .title
-                    | #{station.name}
-              - else
-                - if params[:via_station] == station.name
-                  .step style="background-color: #009c95;"
-                    .title
-                      | #{station.name}
-                    .description
-                      | #{route.name}
-                - else
-                  .step
-                    .title
-                      | #{station.name}
-                    .description
-                      | #{route.name}
-                .step
-                  .description
-                    i.middle.arrow.down.icon
+        .ui.stackable.two.column.grid
+          .column
+            .map
+            | ここにGoogleMapが入る予定
+          .column
+            .ui.center.aligned.container
+              .ui.fluid.vertical.steps
+                - onestroke[0].zip(onestroke[1]).each do |station, route|
+                  - if route.nil?
+                    .step
+                      .title
+                        | #{station.name}
+                  - else
+                    - if params[:via_station] == station.name
+                      .step style="background-color: #009c95;"
+                        .title
+                          | #{station.name}
+                        .description
+                          | #{route.name}
+                    - else
+                      .step
+                        .title
+                          | #{station.name}
+                        .description
+                          | #{route.name}
+                    .step
+                      .description
+                        i.middle.arrow.down.icon

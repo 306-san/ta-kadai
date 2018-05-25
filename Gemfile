@@ -51,7 +51,7 @@ group :development do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'foreman'
-  gem "better_errors"
+  gem 'better_errors' , github: 'tzmfreedom/better_errors', branch: 'fix_bug_for_pry'
   gem "binding_of_caller"
 end
 
@@ -79,3 +79,6 @@ gem 'slim-rails'
 group :production do
   gem 'pg', '0.21.0'
 end
+
+# Using .env file
+gem 'dotenv-rails'
