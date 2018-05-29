@@ -14,9 +14,9 @@ class Line < ApplicationRecord
   has_many :onestrokes, through: :onestroke_lines, source: :onestroke, extend: Linestation
   
   def next_station
-    Station.find(self.next)
+    Station.find_by(id: self.next)
   end
   def prev_station
-    Station.find(self.previous)
+    Station.find_by(id: self.previous)
   end
 end

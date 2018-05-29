@@ -74,3 +74,8 @@ gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git'
 
 # Adaption Slim
 gem 'slim-rails'
+
+#deploy heroku
+group :production do
+  gem 'pg', '0.21.0'
+end
