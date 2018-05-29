@@ -6,6 +6,7 @@ class OnestrokesController < ApplicationController
     @onestrokes = []
     @transfer_stations_array = []
     @stations_array = []
+    @ekixpert_url_array = []
     has_passed_through_via_station = false
     p params[:first_end_station]
     p params[:first_end_station]
@@ -16,6 +17,7 @@ class OnestrokesController < ApplicationController
       transfer_stations = []
       transfer_route_names = []
       stations = []
+      ekixpert_urls = []
       has_passed_through_via_station = false
       transfer_station_ids=OnestrokeStation.where(onestroke_id: onestroke_id).group(:station_id).having("count(station_id) >= ?", 2).count.keys
       transfer_lines = OnestrokeLine.where(id: OnestrokeStation.where(onestroke_id: onestroke_id).where(station_id: transfer_station_ids).ids.sort)
@@ -47,10 +49,22 @@ class OnestrokesController < ApplicationController
     OnestrokeStation.where(onestroke_id: onestroke_id).sort.each do |onestroke_station|
       stations << onestroke_station.station.get_latlng
     end
+    # https://api.ekispert.jp/v1/json/search/course/light?key=LE_mz7vyp6na6S2U&from=東京&to=取手&via=仙台&plane=false
+    body=open(URI.encode("https://api.ekispert.jp/v1/json/search/course/light?key=#{ENV['EKISPERT_API']}&from=#{params[:first_end_station]}&to=#{params[:via_station]}&plane=false&bus=false"))
+    if body.status[0] == "200"
+      return_json_data = JSON.parse(body.read)
+      ekixpert_urls << return_json_data['ResultSet']['ResourceURI']
+    end
+    body=open(URI.encode("https://api.ekispert.jp/v1/json/search/course/light?key=#{ENV['EKISPERT_API']}&from=#{params[:via_station]}&to=#{params[:first_end_station]}&via=#{transfer_stations.last(2)[0].name}&plane=false&bus=false"))
+    if body.status[0] == "200"
+      return_json_data = JSON.parse(body.read)
+      ekixpert_urls << return_json_data['ResultSet']['ResourceURI']
+    end
     @stations_array << stations
     transfer_stations << transfer_lines.last.line.stations.first
     @onestrokes << transfer_stations
     @transfer_stations_array << transfer_route_names
     @storoke_ids = onestroke_ids
+    @ekixpert_url_array << ekixpert_urls
     end
 end
