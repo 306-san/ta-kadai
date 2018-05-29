@@ -46,8 +46,8 @@ class OnestrokesController < ApplicationController
           before_route_name = transfer_line.line.route.name
         end
       end
-    Onestroke.find(onestroke_id).stations.each do |station|
-      stations << station.get_latlng
+    OnestrokeStation.where(onestroke_id: onestroke_id).sort.each do |onestroke_station|
+      stations << onestroke_station.station.get_latlng
     end
     # https://api.ekispert.jp/v1/json/search/course/light?key=LE_mz7vyp6na6S2U&from=東京&to=取手&via=仙台&plane=false
     body=open(URI.encode("https://api.ekispert.jp/v1/json/search/course/light?key=#{ENV['EKISPERT_API']}&from=#{params[:first_end_station]}&to=#{params[:via_station]}&plane=false&bus=false"))
@@ -67,5 +67,4 @@ class OnestrokesController < ApplicationController
     @storoke_ids = onestroke_ids
     @ekixpert_url_array << ekixpert_urls
     end
-  end
 end
