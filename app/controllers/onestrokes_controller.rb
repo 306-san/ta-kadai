@@ -5,6 +5,7 @@ class OnestrokesController < ApplicationController
   def show
     @onestrokes = []
     @transfer_stations_array = []
+    @stations_array = []
     has_passed_through_via_station = false
     p params[:first_end_station]
     p params[:first_end_station]
@@ -14,6 +15,7 @@ class OnestrokesController < ApplicationController
     onestroke_ids.each do |onestroke_id|
       transfer_stations = []
       transfer_route_names = []
+      stations = []
       has_passed_through_via_station = false
       transfer_station_ids=OnestrokeStation.where(onestroke_id: onestroke_id).group(:station_id).having("count(station_id) >= ?", 2).count.keys
       transfer_lines = OnestrokeLine.where(id: OnestrokeStation.where(onestroke_id: onestroke_id).where(station_id: transfer_station_ids).ids.sort)
@@ -42,6 +44,10 @@ class OnestrokesController < ApplicationController
           before_route_name = transfer_line.line.route.name
         end
       end
+    OnestrokeStation.where(onestroke_id: onestroke_id).sort.each do |onestroke_station|
+      stations << onestroke_station.station.get_latlng
+    end
+    @stations_array << stations
     transfer_stations << transfer_lines.last.line.stations.first
     @onestrokes << transfer_stations
     @transfer_stations_array << transfer_route_names

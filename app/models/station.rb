@@ -7,4 +7,8 @@ class Station < ApplicationRecord
     has_many :onestrokes, through: :onestroke_stations, source: :onestroke
 
     validates :name, uniqueness: true
+
+    def get_latlng
+        [self.latitude.to_f, self.longitude.to_f]
+      end
 end

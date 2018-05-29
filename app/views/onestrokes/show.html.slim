@@ -1,4 +1,53 @@
 = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
+/ = javascript_pack_tag 'map_react' , 'data-turbolinks-track': 'reload'
+head
+  script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API']}"
+  javascript:
+    //Google Mapの初期化
+    function initialize(id_name,latlng_array_number) {
+    var myLatLng = new google.maps.LatLng(35.681391, 139.766103);
+    var stations_array = #{raw @stations_array.to_json};
+    var stations_array_index = Number(latlng_array_number) - 1;
+    console.log(stations_array[stations_array_index]);
+    var myOptions = {
+      zoom: 6,
+      center: myLatLng
+    };
+
+    //Mapの作成
+    var map2 = new google.maps.Map(document.getElementById(id_name),
+        myOptions);
+    var flightPlanCoordinates = [];
+
+     stations_array[stations_array_index].forEach( function( value, index, array ) {
+       console.log( index + '：' + array[index]);
+             console.log( index + '：' + array[index][0]);
+             console.log(toString.call(array[index][0]));
+       console.log( index + '：' + array[index][0]);
+       flightPlanCoordinates.push(new google.maps.LatLng(array[index][0], array[index][1]));
+     });
+    //線を引きたい地点を、flightPlanCoordinatesという配列に、
+    //google.maps.LatLngを作って格納します。
+    //flightPlanCoordinates.push(new google.maps.LatLng(35.681391, 139.766103));
+    //flightPlanCoordinates.push(new google.maps.LatLng(35.71379, 139.777043));
+    //var flightPlanCoordinates = [
+     // new google.maps.LatLng(35.681391, 139.766103),
+      //new google.maps.LatLng(35.71379, 139.777043),
+      //new google.maps.LatLng(35.906439, 139.62405),
+      //new google.maps.LatLng(36.312747, 139.806241)
+    //];
+    console.log(flightPlanCoordinates[0]);
+
+    var flightPath = new google.maps.Polyline({
+      path: flightPlanCoordinates,
+      strokeColor: "#FF0000",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    
+    //ポリラインをMapにセットします。
+    flightPath.setMap(map2);
+    }
 
 - unless @onestrokes.blank?
   h1.ui.center.aligned.header
@@ -8,7 +57,7 @@
     | 一筆書きの経路が見つかりませんでした・・・
 
 
-- @onestrokes.zip(@transfer_stations_array).each.with_index(1) do |onestroke,i|
+- @onestrokes.zip(@transfer_stations_array, @stations_array).each.with_index(1) do |onestroke,i|
   p
   .ui.container
     .ui.raised.segment
@@ -16,26 +65,32 @@
         .ui.blue.ribbon.label
           | ルート#{i}
         p
-        .ui.center.aligned.container
-          .ui.fluid.vertical.steps
-            - onestroke[0].zip(onestroke[1]).each do |station, route|
-              - if route.nil?
-                .step
-                  .title
-                    | #{station.name}
-              - else
-                - if params[:via_station] == station.name
-                  .step style="background-color: #009c95;"
-                    .title
-                      | #{station.name}
-                    .description
-                      | #{route.name}
-                - else
-                  .step
-                    .title
-                      | #{station.name}
-                    .description
-                      | #{route.name}
-                .step
-                  .description
-                    i.middle.arrow.down.icon
+        .ui.stackable.two.column.grid
+          .column
+            .ui.embed id="map#{i}"
+            javascript:
+              initialize("map#{i}","#{i}")
+          .column
+            .ui.center.aligned.container
+              .ui.fluid.vertical.steps
+                - onestroke[0].zip(onestroke[1]).each do |station, route|
+                  - if route.nil?
+                    .step
+                      .title
+                        | #{station.name}
+                  - else
+                    - if params[:via_station] == station.name
+                      .step style="background-color: #009c95;"
+                        .title
+                          | #{station.name}
+                        .description
+                          | #{route.name}
+                    - else
+                      .step
+                        .title
+                          | #{station.name}
+                        .description
+                          | #{route.name}
+                    .step
+                      .description
+                        i.middle.arrow.down.icon

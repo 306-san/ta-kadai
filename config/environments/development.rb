@@ -3,6 +3,7 @@ Rails.application.configure do
   config.webpacker.check_yarn_integrity = true
   # Settings specified here will take precedence over those in config/application.rb.
   config.x.webpacker[:dev_server_host] = "http://localhost:3035"
+  config.web_console.whitelisted_ips = '0.0.0.0/0'
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
