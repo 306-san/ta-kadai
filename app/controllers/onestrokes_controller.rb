@@ -67,4 +67,5 @@ class OnestrokesController < ApplicationController
     @storoke_ids = onestroke_ids
     @ekixpert_url_array << ekixpert_urls
     end
+  end
 end
