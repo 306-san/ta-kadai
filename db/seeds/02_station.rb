@@ -5,7 +5,7 @@ if Route.exists? #Routeにデータをぶち込まれてるか確認
   # routes = Route.where(name: %w(JR中央線 JR京浜東北線))
   routes.each do |route|
     p route
-    sleep(rand(10.0..30.0))
+    sleep(rand(3.0..10.0))
     p "えいえいっ。怒った?"
     result = get_api("http://express.heartrails.com/api/json?method=getStations&line=#{route.name}")
     unless result['response']['error'].present?

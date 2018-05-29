@@ -10,9 +10,8 @@ head
     var stations_array_index = Number(latlng_array_number) - 1;
     console.log(stations_array[stations_array_index]);
     var myOptions = {
-      zoom: 12,
-      center: myLatLng,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
+      zoom: 6,
+      center: myLatLng
     };
 
     //Mapの作成
@@ -69,11 +68,8 @@ head
         .ui.stackable.two.column.grid
           .column
             .ui.embed id="map#{i}"
-            | ここにGoogleMapが入る予定
-            = onestroke[2]
             javascript:
               initialize("map#{i}","#{i}")
-              console.log("#{"hogehoge"}")
           .column
             .ui.center.aligned.container
               .ui.fluid.vertical.steps

@@ -44,8 +44,8 @@ class OnestrokesController < ApplicationController
           before_route_name = transfer_line.line.route.name
         end
       end
-    Onestroke.find(onestroke_id).stations.each do |station|
-      stations << station.get_latlng
+    OnestrokeStation.where(onestroke_id: onestroke_id).sort.each do |onestroke_station|
+      stations << onestroke_station.station.get_latlng
     end
     @stations_array << stations
     transfer_stations << transfer_lines.last.line.stations.first
