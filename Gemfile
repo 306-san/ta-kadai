@@ -66,3 +66,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Add React environment
 gem 'webpacker', github: 'rails/webpacker'
+
+# Adaptation Semantic-UI
+gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git'
+
+# Adaption Slim
+gem 'slim-rails'
