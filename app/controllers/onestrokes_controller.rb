@@ -47,5 +47,4 @@ class OnestrokesController < ApplicationController
     @transfer_stations_array << transfer_route_names
     @storoke_ids = onestroke_ids
     end
-  end
 end
