@@ -82,3 +82,4 @@ end
 
 # Using .env file
 gem 'dotenv-rails'
+
