@@ -1,5 +1,6 @@
 = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
 / = javascript_pack_tag 'map_react' , 'data-turbolinks-track': 'reload'
+
 head
   script src="https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API']}"
   javascript:
@@ -8,7 +9,6 @@ head
     var myLatLng = new google.maps.LatLng(35.681391, 139.766103);
     var stations_array = #{raw @stations_array.to_json};
     var stations_array_index = Number(latlng_array_number) - 1;
-    console.log(stations_array[stations_array_index]);
     var myOptions = {
       zoom: 6,
       center: myLatLng
@@ -20,10 +20,6 @@ head
     var flightPlanCoordinates = [];
 
      stations_array[stations_array_index].forEach( function( value, index, array ) {
-       console.log( index + '：' + array[index]);
-             console.log( index + '：' + array[index][0]);
-             console.log(toString.call(array[index][0]));
-       console.log( index + '：' + array[index][0]);
        flightPlanCoordinates.push(new google.maps.LatLng(array[index][0], array[index][1]));
      });
     //線を引きたい地点を、flightPlanCoordinatesという配列に、
@@ -36,7 +32,6 @@ head
       //new google.maps.LatLng(35.906439, 139.62405),
       //new google.maps.LatLng(36.312747, 139.806241)
     //];
-    console.log(flightPlanCoordinates[0]);
 
     var flightPath = new google.maps.Polyline({
       path: flightPlanCoordinates,
@@ -44,18 +39,22 @@ head
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
-    
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map2);
     //ポリラインをMapにセットします。
     flightPath.setMap(map2);
     }
 
-- unless @onestrokes.blank?
-  h1.ui.center.aligned.header
-    | 一筆書きでの旅が可能です!
-- else
-  h1.ui.center.aligned.header
-    | 一筆書きの経路が見つかりませんでした・・・
+p
 
+- unless @onestrokes.blank?
+  .ui.container
+    h1.ui.center.aligned.header
+      | 一筆書きでの旅が可能です!
+- else
+  .ui.container
+    h1.ui.center.aligned.header
+      | 一筆書きの経路が見つかりませんでした・・・
 
 - @onestrokes.zip(@transfer_stations_array, @stations_array).each.with_index(1) do |onestroke,i|
   p
@@ -67,7 +66,7 @@ head
         p
         .ui.stackable.two.column.grid
           .column
-            .ui.embed id="map#{i}"
+            .ui.embed id="map#{i}" style="height:600px;"
             .
               = link_to "行きの経路(駅すぱあとのリンクへ飛びます)", @ekixpert_url_array[i-1][0]
             .
