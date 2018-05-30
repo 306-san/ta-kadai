@@ -9,6 +9,7 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application' , 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'hello_react', 'data-turbolinks-track': 'reload'
+  header
     div.ui.stackable.container.menu
       / div.item
       /   img src="http://lovelive-sunshine.info/wp-content/uploads/2017/01/1485556363-11ad2ae0ace48bbc232ae15705a2808b.jpg" alt="happy party train logo" width="60" 
@@ -17,5 +18,23 @@ html
       a.item href="http://kisha-tabi.com/1-stroke-sketch-ticket/" target="_blank"
         i.external.alternate.icon
         | 一筆書き切符について
+
+  css:
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    footer {
+     margin-top: auto;
+    }
+
   body
     = yield
+
+  footer
+    .ui.vertical.footer.segment
+      .ui.center.aligned.container
+        .ui.horizontal.inverted.small.list
+          .item
+            | Copyright (C) 2006 - 2012 HeartRails Inc. Some Rights Reserved.
